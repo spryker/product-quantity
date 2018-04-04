@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductQuantity\Communication\Plugin;
+namespace SprykerTest\Zed\ProductQuantity\Communication\Plugin\Cart;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\ProductQuantity\Communication\Plugin\ProductQuantityRestrictionCartRemovalPreCheckPlugin;
+use Spryker\Zed\ProductQuantity\Communication\Plugin\Cart\ProductQuantityRestrictionCartPreCheckPlugin;
 
 /**
  * Auto-generated group annotations
@@ -17,10 +17,11 @@ use Spryker\Zed\ProductQuantity\Communication\Plugin\ProductQuantityRestrictionC
  * @group ProductQuantity
  * @group Communication
  * @group Plugin
- * @group ProductQuantityRestrictionCartRemovalPreCheckPluginTest
+ * @group Cart
+ * @group ProductQuantityRestrictionCartPreCheckPluginTest
  * Add your own group annotations below this line
  */
-class ProductQuantityRestrictionCartRemovalPreCheckPluginTest extends Unit
+class ProductQuantityRestrictionCartPreCheckPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ProductQuantity\ProductQuantityCommunicationTester
@@ -28,9 +29,9 @@ class ProductQuantityRestrictionCartRemovalPreCheckPluginTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\ProductQuantity\Communication\Plugin\ProductQuantityRestrictionCartRemovalPreCheckPlugin
+     * @var \Spryker\Zed\ProductQuantity\Communication\Plugin\Cart\ProductQuantityRestrictionCartPreCheckPlugin
      */
-    protected $productQuantityRestrictionCartRemovalPreCheckPlugin;
+    protected $productQuantityRestrictionCartPreCheckPlugin;
 
     /**
      * @return void
@@ -39,7 +40,7 @@ class ProductQuantityRestrictionCartRemovalPreCheckPluginTest extends Unit
     {
         parent::setUp();
 
-        $this->productQuantityRestrictionCartRemovalPreCheckPlugin = new ProductQuantityRestrictionCartRemovalPreCheckPlugin();
+        $this->productQuantityRestrictionCartPreCheckPlugin = new ProductQuantityRestrictionCartPreCheckPlugin();
     }
 
     /**
@@ -51,7 +52,7 @@ class ProductQuantityRestrictionCartRemovalPreCheckPluginTest extends Unit
         $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
 
         // Act
-        $this->productQuantityRestrictionCartRemovalPreCheckPlugin->check($cartChangeTransfer);
+        $this->productQuantityRestrictionCartPreCheckPlugin->check($cartChangeTransfer);
 
         // Assert
         $this->assertTrue(true);
