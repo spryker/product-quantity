@@ -16,5 +16,5 @@ interface CartChangeTransferQuantityNormalizerInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function normalizeCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function normalizeCartChangeTransferItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }
