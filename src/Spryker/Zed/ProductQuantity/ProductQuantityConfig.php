@@ -9,24 +9,24 @@ namespace Spryker\Zed\ProductQuantity;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\ProductQuantity\ProductQuantityConfig getSharedConfig()
+ */
 class ProductQuantityConfig extends AbstractBundleConfig
 {
-    protected const MIN_QUANTITY = 1.0;
-    protected const INTERVAL = 1.0;
-
     /**
      * @return float
      */
-    public function getMinimumQuantity(): float
+    public function getDefaultMinimumQuantity(): float
     {
-        return static::MIN_QUANTITY;
+        return $this->getSharedConfig()->getDefaultMinimumQuantity();
     }
 
     /**
      * @return float
      */
-    public function getInterval(): float
+    public function getDefaultInterval(): float
     {
-        return static::INTERVAL;
+        return $this->getSharedConfig()->getDefaultInterval();
     }
 }
