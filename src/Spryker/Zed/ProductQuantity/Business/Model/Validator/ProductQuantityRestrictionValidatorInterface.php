@@ -38,4 +38,11 @@ interface ProductQuantityRestrictionValidatorInterface
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool;
+
+    public function validateItemAdditionBySku(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    public function isValidItemQuantitiesBySkuOnCheckout(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
 }

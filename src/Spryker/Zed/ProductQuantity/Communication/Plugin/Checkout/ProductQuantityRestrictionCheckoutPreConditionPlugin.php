@@ -22,6 +22,7 @@ class ProductQuantityRestrictionCheckoutPreConditionPlugin extends AbstractPlugi
     /**
      * {@inheritDoc}
      * - Requires `QuoteTransfer.items.sku` to be set.
+     * - Groups line items by Group key for the validation.
      * - Validates if quote items fulfill all quantity restriction rules during checkout.
      * - Adds all found errors to `CheckoutResponseTransfer.errors`.
      * - Returns `true` if no errors were found, `false` otherwise.

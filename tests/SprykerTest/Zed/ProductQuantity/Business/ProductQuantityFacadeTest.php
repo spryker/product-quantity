@@ -317,7 +317,7 @@ class ProductQuantityFacadeTest extends Unit
             [true, 2, '4'],
             [false, 0, 0],
             [false, 0, -1],
-            [false, 2, -1],
+            [false, 2, -3],
             [false, 0, 0.99],
             [false, 1, 0.99],
             [false, 1, '0.5'],

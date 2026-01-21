@@ -83,7 +83,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
 
         $changedSkuMapByGroupKey = $this->getChangedSkuMap($cartChangeTransfer);
-        $itemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer);
+        $itemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer->getItems());
         $cartQuantityMapByGroupKey = $this->getItemAddCartQuantityMap($cartChangeTransfer);
         $productQuantityTransferMapBySku = $this->getProductQuantityTransferMap(array_values($changedSkuMapByGroupKey));
 
@@ -112,7 +112,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
 
         $changedSkuMapByGroupKey = $this->getChangedSkuMap($cartChangeTransfer);
-        $itemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer);
+        $itemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer->getItems());
         $cartQuantityMapByGroupKey = $this->getItemRemoveCartQuantityMap($cartChangeTransfer);
         $productQuantityTransferMap = $this->getProductQuantityTransferMap(array_values($changedSkuMapByGroupKey));
 
@@ -161,6 +161,64 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         return $checkoutResponseTransfer->getErrors()->count() === $errorsCount;
     }
 
+    public function isValidItemQuantitiesBySkuOnCheckout(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
+        $errorsCount = $checkoutResponseTransfer->getErrors()->count();
+        $itemSkus = $this->extractItemSkus($quoteTransfer->getItems());
+        $productQuantityTransfersIndexedBySku = $this->getProductQuantityTransferMap($itemSkus);
+
+        $groupedItemsBySku = $this->getItemQuantitiesIndexedBySku($quoteTransfer->getItems());
+
+        $checkedSkus = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $productQuantityTransfer = $productQuantityTransfersIndexedBySku[$itemTransfer->getSkuOrFail()] ?? null;
+            if (!$productQuantityTransfer || in_array($itemTransfer->getSku(), $checkedSkus)) {
+                continue;
+            }
+
+            $checkoutResponseTransfer = $this->validateItemPreCheckout(
+                $itemTransfer,
+                $productQuantityTransfer,
+                $checkoutResponseTransfer,
+                $groupedItemsBySku[$itemTransfer->getSku()] ?? null,
+            );
+
+            $checkedSkus[] = $itemTransfer->getSku();
+        }
+
+        return $checkoutResponseTransfer->getErrors()->count() === $errorsCount;
+    }
+
+    public function validateItemAdditionBySku(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
+
+        $itemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer->getQuote()->getItems());
+        $changedItemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer->getItems());
+
+        $uniqueSkuAffected = array_keys($itemQuantitiesIndexedBySku) + array_keys($changedItemQuantitiesIndexedBySku);
+
+        $productQuantityTransferMapBySku = $this->getProductQuantityTransferMap(array_values($uniqueSkuAffected));
+
+        foreach ($uniqueSkuAffected as $productSku) {
+            $currentQuantity = $itemQuantitiesIndexedBySku[$productSku] ?? 0;
+            $increasingQuantity = $changedItemQuantitiesIndexedBySku[$productSku] ?? 0;
+            $newItemQuantity = $currentQuantity + $increasingQuantity;
+
+            if (
+                !$this->validateQuantityIsNonNegativeInteger($productSku, $newItemQuantity, $responseTransfer) ||
+                !$this->validateQuantityIsPositiveInteger($productSku, $newItemQuantity, $responseTransfer)
+            ) {
+                continue;
+            }
+            $this->validateItem($productSku, $newItemQuantity, $productQuantityTransferMapBySku[$productSku], $responseTransfer);
+        }
+
+        return $responseTransfer;
+    }
+
     /**
      * @param string $sku
      * @param int $quantity
@@ -206,19 +264,21 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param int|null $realQuantity
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected function validateItemPreCheckout(
         ItemTransfer $itemTransfer,
         ProductQuantityTransfer $productQuantityTransfer,
-        CheckoutResponseTransfer $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        ?int $realQuantity = null,
     ): CheckoutResponseTransfer {
         if ($this->isItemInBundle($itemTransfer)) {
             return $checkoutResponseTransfer;
         }
 
-        $itemQuantity = $itemTransfer->getQuantityOrFail();
+        $itemQuantity = $realQuantity ?: $itemTransfer->getQuantityOrFail();
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();
         $interval = $productQuantityTransfer->getQuantityInterval();
@@ -325,14 +385,20 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<string, int|string|float>
+     * @return array<string, int>
      */
-    protected function getItemQuantitiesIndexedBySku(CartChangeTransfer $cartChangeTransfer): array
+    protected function getItemQuantitiesIndexedBySku(ArrayObject $itemTransfers): array
     {
         $itemQuantitiesIndexedBySku = [];
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
+            if (array_key_exists($itemTransfer->getSku(), $itemQuantitiesIndexedBySku)) {
+                $itemQuantitiesIndexedBySku[$itemTransfer->getSku()] += $itemTransfer->getQuantity();
+
+                continue;
+            }
+
             $itemQuantitiesIndexedBySku[$itemTransfer->getSku()] = $itemTransfer->getQuantity();
         }
 

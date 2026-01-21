@@ -23,6 +23,7 @@ class ProductQuantityRestrictionCartPreCheckPlugin extends AbstractPlugin implem
     /**
      * {@inheritDoc}
      * - Checks if the quantity is positive.
+     * - Identifies and groups product by Line items by Group key.
      * - Validates product quantities if they fulfill all quantity restriction rules during item addition.
      *
      * @api
