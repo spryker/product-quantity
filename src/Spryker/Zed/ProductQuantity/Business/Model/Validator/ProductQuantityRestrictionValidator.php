@@ -198,6 +198,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $itemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer->getQuote()->getItems());
         $changedItemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer->getItems());
 
+        /** @var array<string> $uniqueSkuAffected */
         $uniqueSkuAffected = array_keys($itemQuantitiesIndexedBySku) + array_keys($changedItemQuantitiesIndexedBySku);
 
         $productQuantityTransferMapBySku = $this->getProductQuantityTransferMap(array_values($uniqueSkuAffected));
