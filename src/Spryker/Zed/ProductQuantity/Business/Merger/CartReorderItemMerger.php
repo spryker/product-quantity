@@ -20,20 +20,11 @@ class CartReorderItemMerger implements CartReorderItemMergerInterface
      */
     protected ProductQuantityReaderInterface $productQuantityReader;
 
-    /**
-     * @param \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface $productQuantityReader
-     */
     public function __construct(ProductQuantityReaderInterface $productQuantityReader)
     {
         $this->productQuantityReader = $productQuantityReader;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
-     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartReorderTransfer
-     */
     public function mergeProductQuantityRestrictionItems(
         CartReorderRequestTransfer $cartReorderRequestTransfer,
         CartReorderTransfer $cartReorderTransfer

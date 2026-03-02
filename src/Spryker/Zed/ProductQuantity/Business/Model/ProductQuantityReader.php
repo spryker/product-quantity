@@ -23,9 +23,6 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
      */
     protected $productQuantityRepository;
 
-    /**
-     * @param \Spryker\Zed\ProductQuantity\Persistence\ProductQuantityRepositoryInterface $productQuantityRepository
-     */
     public function __construct(ProductQuantityRepositoryInterface $productQuantityRepository)
     {
         $this->productQuantityRepository = $productQuantityRepository;
@@ -94,11 +91,6 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
         return $productQuantityTransfers;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     *
-     * @return void
-     */
     protected function filterProductQuantityTransfer(ProductQuantityTransfer $productQuantityTransfer): void
     {
         if ($productQuantityTransfer->getQuantityInterval() === null) {

@@ -28,25 +28,16 @@ use Spryker\Zed\ProductQuantity\ProductQuantityDependencyProvider;
  */
 class ProductQuantityBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrictionValidatorInterface
-     */
     public function createProductQuantityRestrictionValidator(): ProductQuantityRestrictionValidatorInterface
     {
         return new ProductQuantityRestrictionValidator($this->createProductQuantityReader());
     }
 
-    /**
-     * @return \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface
-     */
     public function createProductQuantityReader(): ProductQuantityReaderInterface
     {
         return new ProductQuantityReader($this->getRepository());
     }
 
-    /**
-     * @return \Spryker\Zed\ProductQuantity\Business\Model\Normalizer\CartChangeTransferQuantityNormalizerInterface
-     */
     public function createCartChangeTransferQuantityNormalizer(): CartChangeTransferQuantityNormalizerInterface
     {
         return new CartChangeTransferQuantityNormalizer(
@@ -55,25 +46,16 @@ class ProductQuantityBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ProductQuantity\Business\Model\Checker\CartChangeTransferNormalizerPreCheckerInterface
-     */
     public function createCartChangeTransferNormalizerPreChecker(): CartChangeTransferNormalizerPreCheckerInterface
     {
         return new CartChangeTransferNormalizerPreChecker();
     }
 
-    /**
-     * @return \Spryker\Zed\ProductQuantity\Business\Merger\CartReorderItemMergerInterface
-     */
     public function createCartReorderItemMerger(): CartReorderItemMergerInterface
     {
         return new CartReorderItemMerger($this->createProductQuantityReader());
     }
 
-    /**
-     * @return \Spryker\Service\ProductQuantity\ProductQuantityServiceInterface
-     */
     public function getProductQuantityService(): ProductQuantityServiceInterface
     {
         return $this->getProvidedDependency(ProductQuantityDependencyProvider::SERVICE_PRODUCT_QUANTITY);

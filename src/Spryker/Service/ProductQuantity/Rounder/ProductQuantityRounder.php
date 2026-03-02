@@ -11,12 +11,6 @@ use Generated\Shared\Transfer\ProductQuantityTransfer;
 
 class ProductQuantityRounder implements ProductQuantityRounderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param int $quantity
-     *
-     * @return int
-     */
     public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, int $quantity): int
     {
         $min = $productQuantityTransfer->getQuantityMin() ?: 1;

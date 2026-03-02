@@ -35,9 +35,6 @@ class ProductQuantityFacadeTest extends Unit
      */
     protected $productQuantityFacade;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -82,9 +79,6 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertSame($expectedIsSuccess, $actualIsSuccess);
     }
 
-    /**
-     * @return array
-     */
     public function itemRemovalQuantities(): array
     {
         return [
@@ -136,9 +130,6 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertSame($expectedIsSuccess, $actualIsSuccess);
     }
 
-    /**
-     * @return array
-     */
     public function itemRemovalProductsWithoutProductQuantity(): array
     {
         return [
@@ -228,9 +219,6 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertTrue($isSuccess);
     }
 
-    /**
-     * @return array
-     */
     public function itemAdditionQuantities(): array
     {
         return [
@@ -251,9 +239,6 @@ class ProductQuantityFacadeTest extends Unit
         ];
     }
 
-    /**
-     * @return array
-     */
     public function itemPreCheckoutValidationParametersForBundles(): array
     {
         return [
@@ -305,9 +290,6 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertSame($expectedIsSuccess, $actualIsSuccess);
     }
 
-    /**
-     * @return array
-     */
     public function itemAdditionProductsWithoutProductQuantity(): array
     {
         return [
@@ -324,9 +306,6 @@ class ProductQuantityFacadeTest extends Unit
         ];
     }
 
-    /**
-     * @return void
-     */
     public function testFindProductQuantityTransfersByProductIdsFindsAllExistingItems(): void
     {
         // Assign
@@ -344,9 +323,6 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertSame($expectedCount, $actualCount);
     }
 
-    /**
-     * @return void
-     */
     public function testFindProductQuantityTransfersByProductIdsReturnsEmptyArrayWhenProductsWereNotFound(): void
     {
         // Assign
@@ -361,9 +337,6 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertSame($expectedCount, $actualCount);
     }
 
-    /**
-     * @return void
-     */
     public function testNormalizeCartChangeTransferMinimumAdjustment(): void
     {
         $expectedQuantity = 2;
@@ -380,9 +353,6 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
     }
 
-    /**
-     * @return void
-     */
     public function testNormalizeCartChangeTransferMaximumAdjustment(): void
     {
         $expectedQuantity = 100;
@@ -399,9 +369,6 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
     }
 
-    /**
-     * @return void
-     */
     public function testNormalizeCartChangeTransferStepAdjustment(): void
     {
         $expectedQuantity = 4;
@@ -418,9 +385,6 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
     }
 
-    /**
-     * @return void
-     */
     public function testNormalizeCartChangeTransferItemsWillNormalizeQuantityWhenQuoteAlreadyHaveSameItem(): void
     {
         //Arrange
@@ -450,9 +414,6 @@ class ProductQuantityFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testHasCartChangeTransferNormalizableItemsShouldReturnTrue(): void
     {
         $normalizableField = 'quantity';
@@ -466,9 +427,6 @@ class ProductQuantityFacadeTest extends Unit
         $this->assertTrue($actualResult);
     }
 
-    /**
-     * @return void
-     */
     public function testHasCartChangeTransferNormalizableItemsShouldReturnFalse(): void
     {
         $normalizableField = 'quantity';

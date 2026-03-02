@@ -20,11 +20,6 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const SERVICE_PRODUCT_QUANTITY = 'SERVICE_PRODUCT_QUANTITY';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
@@ -33,11 +28,6 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
@@ -45,11 +35,6 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductQuantityService(Container $container): Container
     {
         $container->set(static::SERVICE_PRODUCT_QUANTITY, function (Container $container) {

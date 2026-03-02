@@ -19,12 +19,6 @@ class ProductQuantityDataHelper extends Module
     use LocatorHelperTrait;
     use DataCleanupHelperTrait;
 
-    /**
-     * @param int $idProduct
-     * @param array $productQuantityOverride
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer
-     */
     public function haveProductQuantity(int $idProduct, array $productQuantityOverride = []): ProductQuantityTransfer
     {
         $productQuantityTransfer = (new ProductQuantityBuilder())
@@ -41,11 +35,6 @@ class ProductQuantityDataHelper extends Module
         return $productQuantityTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer
-     */
     protected function storeProductQuantity(ProductQuantityTransfer $productQuantityTransfer): ProductQuantityTransfer
     {
         $spyProductQuantityEntity = $this->getProductQuantityQuery()
@@ -62,11 +51,6 @@ class ProductQuantityDataHelper extends Module
         return $productQuantityTransfer;
     }
 
-    /**
-     * @param int $idProductQuantity
-     *
-     * @return void
-     */
     protected function cleanupProductQuantity(int $idProductQuantity): void
     {
         $this->debug(sprintf('Deleting product quantity: %d', $idProductQuantity));
@@ -76,9 +60,6 @@ class ProductQuantityDataHelper extends Module
             ->delete();
     }
 
-    /**
-     * @return \Orm\Zed\ProductQuantity\Persistence\SpyProductQuantityQuery
-     */
     protected function getProductQuantityQuery(): SpyProductQuantityQuery
     {
         return SpyProductQuantityQuery::create();

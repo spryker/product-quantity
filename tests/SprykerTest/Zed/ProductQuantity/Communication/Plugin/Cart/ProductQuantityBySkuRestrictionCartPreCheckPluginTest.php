@@ -34,9 +34,6 @@ class ProductQuantityBySkuRestrictionCartPreCheckPluginTest extends Unit
      */
     protected $productQuantityBySkuRestrictionCartPreCheckPlugin;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -44,9 +41,6 @@ class ProductQuantityBySkuRestrictionCartPreCheckPluginTest extends Unit
         $this->productQuantityBySkuRestrictionCartPreCheckPlugin = new ProductQuantityBySkuRestrictionCartPreCheckPlugin();
     }
 
-    /**
-     * @return void
-     */
     public function testCheckDoesNotThrowExceptionWhenCalledWithEmptyListOfItems(): void
     {
         // Assign
@@ -97,9 +91,6 @@ class ProductQuantityBySkuRestrictionCartPreCheckPluginTest extends Unit
         $this->assertSame($expectedIsSuccess, $actualIsSuccess);
     }
 
-    /**
-     * @return array
-     */
     public function itemAdditionQuantities(): array
     {
         return [
@@ -156,9 +147,6 @@ class ProductQuantityBySkuRestrictionCartPreCheckPluginTest extends Unit
         $this->assertSame($expectedIsSuccess, $actualIsSuccess);
     }
 
-    /**
-     * @return array
-     */
     public function itemAdditionProductsWithoutProductQuantity(): array
     {
         return [

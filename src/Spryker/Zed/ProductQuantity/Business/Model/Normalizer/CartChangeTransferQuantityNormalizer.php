@@ -67,21 +67,12 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      */
     protected $productQuantityService;
 
-    /**
-     * @param \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface $productQuantityReader
-     * @param \Spryker\Service\ProductQuantity\ProductQuantityServiceInterface $productQuantityService
-     */
     public function __construct(ProductQuantityReaderInterface $productQuantityReader, ProductQuantityServiceInterface $productQuantityService)
     {
         $this->productQuantityReader = $productQuantityReader;
         $this->productQuantityService = $productQuantityService;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function normalizeCartChangeTransferItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $changedSkuMapByGroupKey = $this->getChangedSkuMap($cartChangeTransfer);
@@ -111,11 +102,6 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
         return $cartChangeTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
     protected function isItemTransferNormalizable(ItemTransfer $itemTransfer): bool
     {
         $normalizableFields = $itemTransfer->getNormalizableFields();
@@ -123,13 +109,6 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
         return (bool)$normalizableFields && in_array(static::NORMALIZABLE_FIELD, $normalizableFields);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param int $totalQuantityByGroupKey
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function normalizeItemTransfer(
         ItemTransfer $itemTransfer,
         ProductQuantityTransfer $productQuantityTransfer,
@@ -148,12 +127,6 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
         return $itemTransfer;
     }
 
-    /**
-     * @param int $quantity
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     *
-     * @return bool
-     */
     protected function isItemTransferQuantityValid(int $quantity, ProductQuantityTransfer $productQuantityTransfer): bool
     {
         $min = $productQuantityTransfer->getQuantityMin();
@@ -272,13 +245,6 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
         return $productQuantityTransferMap;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param int $nearestQuantity
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function addNotificationMessage(
         ProductQuantityTransfer $productQuantityTransfer,
         int $nearestQuantity,
@@ -293,13 +259,6 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
         return $itemTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param int $nearestQuantity
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
-     */
     protected function createNotificationMessage(ProductQuantityTransfer $productQuantityTransfer, int $nearestQuantity, int $quantity): ?MessageTransfer
     {
         $min = $productQuantityTransfer->getQuantityMin();
@@ -333,13 +292,6 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
         return null;
     }
 
-    /**
-     * @param string $notificationMessage
-     * @param string $notificationParam
-     * @param int $nearestQuantity
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
     protected function buildNotificationMessage(string $notificationMessage, string $notificationParam, int $nearestQuantity): MessageTransfer
     {
         return (new MessageTransfer())

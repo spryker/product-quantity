@@ -65,19 +65,11 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      */
     protected $productQuantityReader;
 
-    /**
-     * @param \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface $productQuantityReader
-     */
     public function __construct(ProductQuantityReaderInterface $productQuantityReader)
     {
         $this->productQuantityReader = $productQuantityReader;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     */
     public function validateItemAddition(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
@@ -102,11 +94,6 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         return $responseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     */
     public function validateItemRemoval(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
@@ -131,12 +118,6 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         return $responseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return bool
-     */
     public function isValidItemQuantitiesOnCheckout(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
@@ -220,14 +201,6 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         return $responseTransfer;
     }
 
-    /**
-     * @param string $sku
-     * @param int $quantity
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
-     *
-     * @return void
-     */
     protected function validateItem(
         string $sku,
         int $quantity,
@@ -251,24 +224,11 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
     protected function isItemInBundle(ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getRelatedBundleItemIdentifier() !== null;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     * @param int|null $realQuantity
-     *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
     protected function validateItemPreCheckout(
         ItemTransfer $itemTransfer,
         ProductQuantityTransfer $productQuantityTransfer,
@@ -436,9 +396,6 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         return $skuMap;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer
-     */
     protected function getDefaultProductQuantityTransfer(): ProductQuantityTransfer
     {
         return (new ProductQuantityTransfer())
@@ -575,35 +532,16 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         return $quantity > 0 && ctype_digit((string)$quantity);
     }
 
-    /**
-     * @param int $quantity
-     * @param int|null $min
-     *
-     * @return bool
-     */
     protected function isMinQuantityFulfilled(int $quantity, ?int $min): bool
     {
         return $quantity === 0 || $quantity >= $min;
     }
 
-    /**
-     * @param int $quantity
-     * @param int|null $min
-     * @param int|null $interval
-     *
-     * @return bool
-     */
     protected function isQuantityIntervalFulfilled(int $quantity, ?int $min, ?int $interval): bool
     {
         return $quantity === 0 || ($quantity - $min) % $interval === 0;
     }
 
-    /**
-     * @param int $quantity
-     * @param int|null $max
-     *
-     * @return bool
-     */
     protected function isMaxQuantityFulfilled(int $quantity, ?int $max): bool
     {
         return $max === null || $quantity <= $max;

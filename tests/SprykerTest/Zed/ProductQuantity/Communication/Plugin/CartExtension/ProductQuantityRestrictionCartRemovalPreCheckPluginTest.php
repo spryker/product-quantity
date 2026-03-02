@@ -34,9 +34,6 @@ class ProductQuantityRestrictionCartRemovalPreCheckPluginTest extends Unit
      */
     protected $productQuantityRestrictionCartRemovalPreCheckPlugin;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -44,9 +41,6 @@ class ProductQuantityRestrictionCartRemovalPreCheckPluginTest extends Unit
         $this->productQuantityRestrictionCartRemovalPreCheckPlugin = new ProductQuantityRestrictionCartRemovalPreCheckPlugin();
     }
 
-    /**
-     * @return void
-     */
     public function testCheckDoesNotThrowExceptionWhenCalledWithEmptyListOfItems(): void
     {
         // Assign

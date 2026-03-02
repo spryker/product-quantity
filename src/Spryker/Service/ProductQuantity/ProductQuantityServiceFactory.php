@@ -13,9 +13,6 @@ use Spryker\Service\ProductQuantity\Rounder\ProductQuantityRounderInterface;
 
 class ProductQuantityServiceFactory extends AbstractServiceFactory
 {
-    /**
-     * @return \Spryker\Service\ProductQuantity\Rounder\ProductQuantityRounderInterface
-     */
     public function createProductQuantityRounder(): ProductQuantityRounderInterface
     {
         return new ProductQuantityRounder();

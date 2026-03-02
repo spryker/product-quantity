@@ -59,9 +59,6 @@ class IsValidItemQuantitiesOnCheckoutTest extends Unit
      */
     protected ProductQuantityBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testReturnsNoErrorsWhenProductDoesNotHaveRestrictions(): void
     {
         // Arrange

@@ -19,17 +19,11 @@ use Spryker\Zed\ProductQuantity\Persistence\Propel\Mapper\ProductQuantityMapperI
  */
 class ProductQuantityPersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Orm\Zed\ProductQuantity\Persistence\SpyProductQuantityQuery
-     */
     public function createProductQuantityQuery(): SpyProductQuantityQuery
     {
         return SpyProductQuantityQuery::create();
     }
 
-    /**
-     * @return \Spryker\Zed\ProductQuantity\Persistence\Propel\Mapper\ProductQuantityMapperInterface
-     */
     public function createProductQuantityMapper(): ProductQuantityMapperInterface
     {
         return new ProductQuantityMapper();

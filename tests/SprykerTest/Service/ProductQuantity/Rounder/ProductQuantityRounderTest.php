@@ -24,9 +24,6 @@ use Spryker\Service\ProductQuantity\Rounder\ProductQuantityRounder;
  */
 class ProductQuantityRounderTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testGetNearestQuantityShouldReturnRoundedQuantity(): void
     {
         $productQuantityRounder = new ProductQuantityRounder();
@@ -53,13 +50,6 @@ class ProductQuantityRounderTest extends Unit
         $this->assertSame(30, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 45));
     }
 
-    /**
-     * @param int|null $min
-     * @param int|null $interval
-     * @param int|null $max
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer
-     */
     protected function createProductQuantityTransfer(?int $min, ?int $interval, ?int $max): ProductQuantityTransfer
     {
         return (new ProductQuantityTransfer())

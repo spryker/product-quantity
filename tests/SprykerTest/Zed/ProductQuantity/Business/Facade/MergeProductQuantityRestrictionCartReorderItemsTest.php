@@ -46,9 +46,6 @@ class MergeProductQuantityRestrictionCartReorderItemsTest extends Unit
      */
     protected ProductQuantityBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testMergesQuantityOfItemsWithProductQuantityRestrictions(): void
     {
         // Arrange
@@ -82,9 +79,6 @@ class MergeProductQuantityRestrictionCartReorderItemsTest extends Unit
         $this->assertSame(2, $orderItemTransfer->getQuantity());
     }
 
-    /**
-     * @return void
-     */
     public function testDoesNothingWhenNoItemsWithProductQuantityRestrictionProvided(): void
     {
         // Arrange
@@ -106,9 +100,6 @@ class MergeProductQuantityRestrictionCartReorderItemsTest extends Unit
         $this->assertCount(2, $cartReorderTransfer->getOrderOrFail()->getItems());
     }
 
-    /**
-     * @return void
-     */
     public function testDoesNothingWhenItemsWithProductQuantityRestrictionNotRequestedInCartReorderRequestTransfer(): void
     {
         // Arrange
@@ -199,12 +190,6 @@ class MergeProductQuantityRestrictionCartReorderItemsTest extends Unit
         ];
     }
 
-    /**
-     * @param int $idSalesOrderItem
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function createOrderItemTransfer(int $idSalesOrderItem, string $sku): ItemTransfer
     {
         return (new ItemBuilder([

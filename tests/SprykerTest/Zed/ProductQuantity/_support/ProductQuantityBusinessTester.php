@@ -35,9 +35,6 @@ class ProductQuantityBusinessTester extends Actor
 {
     use _generated\ProductQuantityBusinessTesterActions;
 
-    /**
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function createProductWithProductQuantity(): ProductConcreteTransfer
     {
         $productTransfer = $this->haveProduct();
@@ -46,13 +43,6 @@ class ProductQuantityBusinessTester extends Actor
         return $productTransfer;
     }
 
-    /**
-     * @param int|null $min
-     * @param int|null $max
-     * @param int|null $interval
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function createProductWithSpecificProductQuantity(?int $min, ?int $max, ?int $interval): ProductConcreteTransfer
     {
         $productQuantityOverride = [
@@ -67,9 +57,6 @@ class ProductQuantityBusinessTester extends Actor
         return $productTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function createEmptyCartChangeTransfer(): CartChangeTransfer
     {
         return (new CartChangeTransfer())
@@ -102,13 +89,6 @@ class ProductQuantityBusinessTester extends Actor
         return $quoteTransfer->addItem($itemTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param string $sku
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function addSkuToCartChangeTransferQuote(CartChangeTransfer $cartChangeTransfer, string $sku, int $quantity): CartChangeTransfer
     {
         $cartChangeTransfer->getQuote()->addItem(
@@ -139,11 +119,6 @@ class ProductQuantityBusinessTester extends Actor
         return $cartChangeTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function addEmptyItemTransferToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $cartChangeTransfer->addItem(
@@ -153,13 +128,6 @@ class ProductQuantityBusinessTester extends Actor
         return $cartChangeTransfer;
     }
 
-    /**
-     * @param string $sku
-     * @param string $groupKey
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     public function createItemTransferWithNormalizableQuantity(string $sku, string $groupKey, int $quantity): ItemTransfer
     {
         return (new ItemBuilder([

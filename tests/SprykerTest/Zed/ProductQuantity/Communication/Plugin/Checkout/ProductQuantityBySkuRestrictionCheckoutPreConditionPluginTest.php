@@ -34,9 +34,6 @@ class ProductQuantityBySkuRestrictionCheckoutPreConditionPluginTest extends Unit
      */
     protected $productQuantityBySkuRestrictionCheckoutPreConditionPlugin;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -44,9 +41,6 @@ class ProductQuantityBySkuRestrictionCheckoutPreConditionPluginTest extends Unit
         $this->productQuantityBySkuRestrictionCheckoutPreConditionPlugin = new ProductQuantityBySkuRestrictionCheckoutPreConditionPlugin();
     }
 
-    /**
-     * @return void
-     */
     public function testCheckDoesNotThrowExceptionWhenCalledWithEmptyListOfItems(): void
     {
         // Assign

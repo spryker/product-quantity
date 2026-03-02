@@ -34,9 +34,6 @@ class ProductQuantityCommunicationTester extends Actor
 {
     use _generated\ProductQuantityCommunicationTesterActions;
 
-    /**
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function createEmptyCartChangeTransfer(): CartChangeTransfer
     {
         return (new CartChangeTransfer())
@@ -47,13 +44,6 @@ class ProductQuantityCommunicationTester extends Actor
             ->setItems(new ArrayObject([]));
     }
 
-    /**
-     * @param int|null $min
-     * @param int|null $max
-     * @param int|null $interval
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function createProductWithSpecificProductQuantity(?int $min, ?int $max, ?int $interval): ProductConcreteTransfer
     {
         $productQuantityOverride = [
@@ -68,14 +58,6 @@ class ProductQuantityCommunicationTester extends Actor
         return $productTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param string $sku
-     * @param int $quantity
-     * @param string|null $groupKey
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function addSkuToCartChangeTransferQuote(
         CartChangeTransfer $cartChangeTransfer,
         string $sku,

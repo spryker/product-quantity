@@ -11,11 +11,5 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface CartChangeTransferNormalizerPreCheckerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $normalizableFields
-     *
-     * @return bool
-     */
     public function hasNormalizableItems(CartChangeTransfer $cartChangeTransfer, array $normalizableFields): bool;
 }
