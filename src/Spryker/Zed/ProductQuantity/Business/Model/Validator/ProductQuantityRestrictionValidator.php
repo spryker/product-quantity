@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
+use Spryker\Zed\ProductQuantity\ProductQuantityConfig;
 
 class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionValidatorInterface
 {
@@ -65,7 +66,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      */
     protected $productQuantityReader;
 
-    public function __construct(ProductQuantityReaderInterface $productQuantityReader)
+    public function __construct(ProductQuantityReaderInterface $productQuantityReader, protected ProductQuantityConfig $productQuantityConfig)
     {
         $this->productQuantityReader = $productQuantityReader;
     }
@@ -249,6 +250,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
                 $this->createCheckoutErrorTransfer(
                     static::ERROR_QUANTITY_INCORRECT,
                     [static::GLOSSARY_KEY_PARAMETER_SKU => $itemTransfer->getSkuOrFail()],
+                    $itemTransfer,
                 ),
             );
 
@@ -260,6 +262,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
                 $this->createCheckoutErrorTransfer(
                     static::ERROR_QUANTITY_MIN_NOT_FULFILLED,
                     [static::GLOSSARY_KEY_PARAMETER_SKU => $itemTransfer->getSkuOrFail()],
+                    $itemTransfer,
                 ),
             );
         }
@@ -269,6 +272,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
                 $this->createCheckoutErrorTransfer(
                     static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED,
                     [static::GLOSSARY_KEY_PARAMETER_SKU => $itemTransfer->getSkuOrFail()],
+                    $itemTransfer,
                 ),
             );
         }
@@ -278,6 +282,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
                 $this->createCheckoutErrorTransfer(
                     static::ERROR_QUANTITY_MAX_NOT_FULFILLED,
                     [static::GLOSSARY_KEY_PARAMETER_SKU => $itemTransfer->getSkuOrFail()],
+                    $itemTransfer,
                 ),
             );
         }
@@ -510,16 +515,15 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     }
 
     /**
-     * @param string $message
      * @param array<string, mixed> $parameters
-     *
-     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createCheckoutErrorTransfer(string $message, array $parameters): CheckoutErrorTransfer
+    protected function createCheckoutErrorTransfer(string $message, array $parameters, ItemTransfer $itemTransfer): CheckoutErrorTransfer
     {
         return (new CheckoutErrorTransfer())
             ->setMessage($message)
-            ->setParameters($parameters);
+            ->setParameters($parameters)
+            ->setErrorType($this->productQuantityConfig->getCheckoutErrorType())
+            ->setGroupKey($itemTransfer->getGroupKey());
     }
 
     /**

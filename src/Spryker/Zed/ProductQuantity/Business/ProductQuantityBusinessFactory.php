@@ -30,7 +30,7 @@ class ProductQuantityBusinessFactory extends AbstractBusinessFactory
 {
     public function createProductQuantityRestrictionValidator(): ProductQuantityRestrictionValidatorInterface
     {
-        return new ProductQuantityRestrictionValidator($this->createProductQuantityReader());
+        return new ProductQuantityRestrictionValidator($this->createProductQuantityReader(), $this->getConfig());
     }
 
     public function createProductQuantityReader(): ProductQuantityReaderInterface
