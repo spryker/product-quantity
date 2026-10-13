@@ -56,6 +56,7 @@
         <property name="message" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
         <property name="errorType" type="string"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="CartReorderRequest" strict="true">
